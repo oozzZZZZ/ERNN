@@ -160,6 +160,8 @@ torch.save(net, outdir+"/GPUmodel.pt")
 print(os.path.isfile(outdir+"/GPUmodel.pt"))
 
 ###jupyter notebook
+
+
 """
 # torch.load(outdir+"/GPUmodel.pt")
 net.eval() #検証モード
@@ -176,6 +178,35 @@ idx = 0
 data_a = test1[idx]
 mask_a = output_n[idx]
 print(test2.shape,test2.dtype)
+
+data_b = data_a * mask_a
+
+from scipy.signal import stft,istft,convolve
+from IPython.display import display, Audio
+
+t,origi = istft(data_a,fs=16000,window='hamming')
+display(Audio(origi,rate = 16000))
+t,sound = istft(data_b,fs=16000,window='hamming')
+display(Audio(sound,rate = 16000))
+"""
+"""
+len(dataloaders_dict["test"])
+my_testiter = iter(dataloaders_dict["test"])
+test, target = my_testiter.next()
+print(test.shape)
+
+# torch.load(outdir+"/GPUmodel.pt")
+net.eval() #検証モード
+
+_output = net(test.to(device))
+
+output_n = _output.to('cpu').detach().numpy()
+
+print(output_n.shape)
+
+idx = 0
+data_a = test[idx].to('cpu').detach().numpy()
+mask_a = output_n[idx]
 
 data_b = data_a * mask_a
 
