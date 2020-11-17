@@ -159,26 +159,32 @@ print(outdir)
 torch.save(net, outdir+"/GPUmodel.pt")
 print(os.path.isfile(outdir+"/GPUmodel.pt"))
 
-#%%load
-torch.load("model\lstm20201117_204350\GPUmodel.pt")
-check_point = "lightning_logs\version_14\checkpoints\epoch=4.ckpt"
-autoencoder = net.load_from_checkpoint(check_point)
-
+###jupyter notebook
+"""
+# torch.load(outdir+"/GPUmodel.pt")
+net.eval() #検証モード
 
 batch_iterator = iter(dataloaders_dict["test"])
 test1,_=next(batch_iterator)
 
-net.eval()
-
 output = net(test1)
-#%%
 output_n = output.to('cpu').detach().numpy()
 
-#%%
 print(output_n.shape)
 
-#%%
-test2 = output[1]
+idx = 0
+data_a = test1[idx]
+mask_a = output[idx]
 print(test2.shape,test2.dtype)
+
+data_b = data_a * mask_a
+
+from scipy.signal import stft,istft,convolve
+from IPython.display import display, Audio
+
+t,sound = istft(data_b,fs=16000,window='hamming')
+display(Audio(sound,rate = 16000))
+"""
+###
 
 
