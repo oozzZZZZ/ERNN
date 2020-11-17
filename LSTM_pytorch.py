@@ -153,7 +153,7 @@ for epoch in range(max_epoch):
 
 outname ="lstm"
 outdir = 'model/' +outname+ now.strftime('%Y%m%d_%H%M%S')
-os.makedirs(outdir)
+os.mkdir(outdir)
 
 print(outdir)
 torch.save(net, outdir+"/GPUmodel.pt")
@@ -174,7 +174,7 @@ print(output_n.shape)
 
 idx = 0
 data_a = test1[idx]
-mask_a = output[idx]
+mask_a = output_n[idx]
 print(test2.shape,test2.dtype)
 
 data_b = data_a * mask_a
@@ -182,6 +182,8 @@ data_b = data_a * mask_a
 from scipy.signal import stft,istft,convolve
 from IPython.display import display, Audio
 
+t,origi = istft(data_a,fs=16000,window='hamming')
+display(Audio(origi,rate = 16000))
 t,sound = istft(data_b,fs=16000,window='hamming')
 display(Audio(sound,rate = 16000))
 """
