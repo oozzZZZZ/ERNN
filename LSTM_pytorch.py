@@ -31,7 +31,7 @@ audio_len = 2**15
 usedata_num = 15000
 sample_rate = 16000
 
-batch_size = 2
+batch_size = 10
 
 datasets_dir = 'C:/Users/zankyo/Desktop/yamamoto/datasets/datasets129x257.npz'
 datasets = np.load(datasets_dir)
