@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Nov 17 22:22:29 2020
+@author: yamamoto
+"""
+
 import librosa
 
 import glob
